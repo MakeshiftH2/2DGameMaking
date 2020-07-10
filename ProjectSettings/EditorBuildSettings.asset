@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Select Level.unity
     guid: 851ee42e8c8ef704dad87eecc041c00c
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/JuntaTakeover.unity
     guid: 6d6ba68fb163ee9419bd7c86f26187c7
   - enabled: 1
-    path: Assets/Scenes/Level 2.unity
+    path: Assets/Scenes/graduate_imprisonment.unity
     guid: 226a56457263d9d4595f11e05b5283f6
   m_configObjects: {}

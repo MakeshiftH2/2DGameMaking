@@ -5,21 +5,28 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {
+    public Weapon currentWeapon;
     // Cached component refernces
     Rigidbody2D myRigidbody;
     Animator myAnimatior;
     Collider2D myCollider2D;
     float gravityScaleAtStart;
-    float attackDamage = 2;
     // State
     bool isAlive = true;
     public bool canMove;
+
+    private float nextTimeOfFire = 0;
+
+    public GameObject shootSource;
+    public int dir;
 
     [SerializeField] int health = 200;
     [SerializeField] float runSpeed = 3f;
     [SerializeField] float jumpSpeed = 1f;
     [SerializeField] float climbSpeed = 3f;
     [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] [Range(0, 1)] float shootSoundVolume = 0.25f;
     // Messages, then Methods
     void Start()
     {
@@ -38,8 +45,31 @@ public class Player : MonoBehaviour
         FlipSprite();
         Jump();
         ClimbLadder();
+        GunAnimaionStates();
+
+        if (currentWeapon == null)
+        {
+            return;
+        }
+
+        if(Input.GetMouseButton(0))
+        {
+            if(Time.time >= nextTimeOfFire)
+            {
+                currentWeapon.Shoot(transform.localScale.x);
+                nextTimeOfFire = Time.time + 1 / currentWeapon.fireRate;
+            }
+
+        }
     }
 
+    private void GunAnimaionStates()
+    {
+        if(GetComponent<Player>().currentWeapon)
+        {
+            myAnimatior.SetBool("withgunIdle", true);
+        }
+    }
     private void Run()
     {
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); // value is between -1 and +1
@@ -48,6 +78,10 @@ public class Player : MonoBehaviour
 
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
         myAnimatior.SetBool("Running", playerHasHorizontalSpeed);
+        if(GetComponent<Player>().currentWeapon)
+        {
+            myAnimatior.SetBool("walkwithGun", playerHasHorizontalSpeed);
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -100,19 +134,6 @@ public class Player : MonoBehaviour
         myAnimatior.SetBool("Jumping", playerHasVerticalSpeed);
     }
 
-    private void Attack()
-    {
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            myAnimatior.SetBool("Attack", true);
-            return;
-        }
-        else
-        {
-            myAnimatior.SetBool("Attack", false);
-        }
-    }
-
 
     private void ClimbLadder()
     {
@@ -134,10 +155,11 @@ public class Player : MonoBehaviour
 
     private void FlipSprite()
     {
-        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) >= Mathf.Epsilon;
         if (playerHasHorizontalSpeed)
         {
-            transform.localScale = new Vector2 (Mathf.Sign(myRigidbody.velocity.x), 1f);
+            transform.localScale = new Vector2(Mathf.Sign(myRigidbody.velocity.x), 1f);
         }
+        
     }
 }
