@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Activated.cs" />
     <Compile Include="Assets\Scripts\DamageDealer.cs" />
     <Compile Include="Assets\Scripts\Dialogue.cs" />
     <Compile Include="Assets\Scripts\DialogueManager.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Scripts\SceneManage.cs" />
     <Compile Include="Assets\Scripts\ScrollRate.cs" />
     <Compile Include="Assets\Scripts\Shredder.cs" />
+    <Compile Include="Assets\Scripts\SuitHitter.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponPickup.cs" />
     <None Include="Assets\Text\HeroTimePart69\Hero Time Part 70.txt" />
