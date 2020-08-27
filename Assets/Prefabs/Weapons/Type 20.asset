@@ -15,7 +15,7 @@ MonoBehaviour:
   currentWeaponSpr: {fileID: 21300000, guid: 5cef614e9bd44fc4e9c3958cabd47f1e, type: 3}
   bulletPrefab: {fileID: 5365929235693000799, guid: c9f9736ad8fd17f48a7a87153098952d,
     type: 3}
-  fireRate: 1
+  fireRate: 30
   damage: 20
   shootSound: {fileID: 8300000, guid: 2b7fba264bfb70445bce8f786492746b, type: 3}
   shootSoundVolume: 0.25
